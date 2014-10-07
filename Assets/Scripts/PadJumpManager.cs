@@ -50,7 +50,7 @@ public class PadJumpManager : MonoBehaviour
 		{
 			if(canJump)
 			{
-				//rigidbody.position = new Vector3(-100, -500, -1000);
+				rigidbody.position = new Vector3(-100, -500, -1000);
 			}
 			canJump = false;
 		}
