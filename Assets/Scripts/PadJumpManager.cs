@@ -72,7 +72,7 @@ public class PadJumpManager : MonoBehaviour
 
 	void CheckJumpInput()
 	{
-		if(Input.GetKeyDown(mKeyCode))
+		if(Input.GetKey(mKeyCode))
 		{
 			switch(mBallState)
 			{
