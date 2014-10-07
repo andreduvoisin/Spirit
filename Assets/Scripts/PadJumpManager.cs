@@ -72,7 +72,7 @@ public class PadJumpManager : MonoBehaviour
 
 	void CheckJumpInput()
 	{
-		if(Input.GetKey(mKeyCode))
+		if(Input.GetKeyDown(mKeyCode))
 		{
 			switch(mBallState)
 			{
@@ -134,11 +134,14 @@ public class PadJumpManager : MonoBehaviour
 
 	void CheckMissedInput()
 	{
-		bMissedInput = mCurrentInputPad != mPadIndex;
-
 		if(mBallState == EBallState.Jumped)
 		{
 			mBallState = EBallState.BeforeJump;
+			bMissedInput = false;
+		}
+		else
+		{
+			bMissedInput = mCurrentInputPad != mPadIndex;
 		}
 	}
 }
