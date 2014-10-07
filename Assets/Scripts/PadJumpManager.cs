@@ -91,7 +91,7 @@ public class PadJumpManager : MonoBehaviour
 	
 	void KillPlayer()
 	{
-		rigidbody.position = new Vector3(-100, -500, -1000);
+		gameObject.SetActive(false);
 	}
 	
 	void FixedUpdate()
