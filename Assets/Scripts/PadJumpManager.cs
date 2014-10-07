@@ -5,11 +5,11 @@ using UnityEditor;
 public class PadJumpManager : MonoBehaviour
 {
 	public GameObject pads;
-	List<GameObject> padList = new List<GameObject>();
-	int padIndex;
-	int currentPad;
-	bool shouldJump;
-	bool canJump;
+	public List<GameObject> padList = new List<GameObject>();
+	public int padIndex;
+	public int currentPad;
+	public bool shouldJump;
+	public bool canJump;
 
 	// Use this for initialization
 	void Start ()
@@ -39,7 +39,7 @@ public class PadJumpManager : MonoBehaviour
 		{
 			if(canJump)
 			{
-				rigidbody.position = new Vector3(-100, -500, -1000);
+				//rigidbody.position = new Vector3(-100, -500, -1000);
 			}
 			canJump = false;
 		}
