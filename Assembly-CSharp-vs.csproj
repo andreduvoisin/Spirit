@@ -49,8 +49,13 @@
      <Compile Include="Assets\Scripts\AlphaMasking.cs" />
      <Compile Include="Assets\Scripts\FollowCamera.cs" />
      <Compile Include="Assets\Scripts\PadJumpManager.cs" />
+     <Compile Include="Assets\Scripts\PadSound.cs" />
      <Compile Include="Assets\Scripts\PadVisuals.cs" />
      <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />
+     <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
+ <Reference Include="Assembly-UnityScript-firstpass">
+ <HintPath>G:/Academic/Current_Courses/GameDesignWorkshop/Projects/parkour/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
