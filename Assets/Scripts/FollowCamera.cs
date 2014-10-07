@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class FollowCamera : MonoBehaviour {
-	public GameObject gameObject;
+	public GameObject mBall;
 	public float mSpringConstant = 0.0f;
 	public float mDampConstant = 0.0f;
 	public float mForwardDistFromBall = 5.0f;
@@ -19,11 +19,11 @@ public class FollowCamera : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-		transform.rotation = Quaternion.LookRotation(gameObject.transform.position - transform.position);
+		transform.rotation = Quaternion.LookRotation(mBall.transform.position - transform.position);
 
-		Vector3 direction = gameObject.transform.rigidbody.velocity;
+		Vector3 direction = mBall.transform.rigidbody.velocity;
 		direction.Normalize();
-		mIdealCameraPos = gameObject.transform.position - direction * mForwardDistFromBall;
+		mIdealCameraPos = mBall.transform.position - direction * mForwardDistFromBall;
 		mIdealCameraPos += transform.up * mUpDistFromBall;
 		Vector3 displacement = transform.position - mIdealCameraPos;
 		Vector3 springAccel = (-mSpringConstant * displacement) - (mDampConstant * mVelocity);

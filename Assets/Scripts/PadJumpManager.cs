@@ -4,81 +4,125 @@ using UnityEditor;
 
 public class PadJumpManager : MonoBehaviour
 {
-	public GameObject pads;
+	public GameObject mPads;
+	public float mErrorMargin;
+	public KeyCode mKeyCode;
+
 	public float mDistanceToTravel;
 	public float mDistanceRemaining;
-	public List<GameObject> padList = new List<GameObject>();
-	public int currentPad;
-	public int padIndex;
-	public bool canJump;
-	public float errorMargin;
-	public Vector3 hitSpot;
+	public float mMissedInputDist;
+	public List<GameObject> mPadList = new List<GameObject>();
+	public int mCurrentInputPad;
+	public int mPadIndex;
+	public bool bCanJump;
+	public bool bMissedInput;
+
+	public enum EBallState { BeforeJump, CanJump, Jumped };
+	public EBallState mBallState;
 
 	// Use this for initialization
 	void Start ()
 	{
-		foreach(Transform pad in pads.transform)
+		foreach(Transform pad in mPads.transform)
 		{
 			if(pad.gameObject.name.Contains("Pad"))
 			{
-				padList.Add(pad.gameObject);
+				mPadList.Add(pad.gameObject);
 			}
 		}
 		rigidbody.velocity = new Vector3(0, -2, 0);
-		padIndex = 0;
-		currentPad = 0;
-		canJump = false;
+		mPadIndex = 0;
+		mCurrentInputPad = 0;
+		mMissedInputDist = 0.0f;
+		bCanJump = false;
+		bMissedInput = false;
+		mBallState = EBallState.BeforeJump;
 
-		// This fails if the next pad is placed less than one ball wide
-		Vector3 direction = rigidbody.velocity;
-		direction.Normalize();
-		RaycastHit hitInfo;
-		Physics.SphereCast(transform.position + (((SphereCollider) collider).radius * 2 + 0.01f) * direction, ((SphereCollider) collider).radius, direction, out hitInfo);
-		mDistanceToTravel = hitInfo.distance + (((SphereCollider) collider).radius * 2 + 0.01f);
-		mDistanceRemaining = mDistanceToTravel;
+		FindDistanceToTravel();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		float dist = Vector3.Distance(padList[currentPad].transform.position, transform.position);
-		if(dist <= errorMargin)
+		//float dist = Vector3.Distance(mPadList[mCurrentInputPad].transform.position, transform.position);
+		float distanceToCurrentPad = bMissedInput ? mMissedInputDist : mDistanceRemaining;
+		switch(mBallState)
 		{
-			canJump = true;
-		}
-		else
-		{
-			if(canJump)
+		case EBallState.BeforeJump:
+			if(distanceToCurrentPad <= mErrorMargin)
 			{
-				rigidbody.position = new Vector3(-100, -500, -1000);
+				mBallState = EBallState.CanJump;
 			}
-			canJump = false;
-		}
-
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			if(canJump)
+			CheckJumpInput();
+			break;
+		case EBallState.CanJump:
+			if(distanceToCurrentPad <= mErrorMargin)
 			{
-				currentPad = (currentPad + 1) % padList.Count;
-				canJump = false;
+				CheckJumpInput();
 			}
 			else
 			{
-				// game over
-				rigidbody.position = new Vector3(-100, -500, -1000);
+				KillPlayer();
+			}
+			break;
+		case EBallState.Jumped:
+			break;
+		}
+	}
+
+	void CheckJumpInput()
+	{
+		if(Input.GetKeyDown(mKeyCode))
+		{
+			switch(mBallState)
+			{
+			case EBallState.BeforeJump:
+			case EBallState.Jumped:
+				KillPlayer();
+				break;
+			case EBallState.CanJump:
+				mBallState = EBallState.Jumped;
+				mCurrentInputPad = (mCurrentInputPad + 1) % mPadList.Count;
+				if(bMissedInput)
+				{
+					mMissedInputDist = 0.0f;
+					bMissedInput = false;
+				}
+				break;
 			}
 		}
+	}
+
+	void KillPlayer()
+	{
+ 		rigidbody.position = new Vector3(-100, -500, -1000);
 	}
 
 	void FixedUpdate()
 	{
 		mDistanceRemaining -= (rigidbody.velocity * Time.deltaTime).magnitude;
+		if(bMissedInput)
+		{
+			mMissedInputDist += (rigidbody.velocity * Time.deltaTime).magnitude;
+		}
 	}
 
 	void OnCollisionEnter(Collision collision)
 	{
 		Jump();
+		FindDistanceToTravel();
+		CheckMissedInput();
+	}
 
+	void Jump()
+	{
+		mPadIndex = (mPadIndex + 1) % mPadList.Count;
+		Vector3 dir = mPadList[mPadIndex].transform.position - transform.position;
+		rigidbody.velocity = Vector3.Normalize(dir) * 10;
+	}
+
+	void FindDistanceToTravel()
+	{
 		// This fails if the next pad is placed less than one ball wide
 		Vector3 direction = rigidbody.velocity;
 		direction.Normalize();
@@ -88,13 +132,13 @@ public class PadJumpManager : MonoBehaviour
 		mDistanceRemaining = mDistanceToTravel;
 	}
 
-	void Jump()
+	void CheckMissedInput()
 	{
-		int targetPad = (padIndex + 1) % padList.Count;
-		
-		Vector3 dir = padList[targetPad].transform.position - transform.position;
-		rigidbody.velocity = Vector3.Normalize(dir) * 10;
+		bMissedInput = mCurrentInputPad != mPadIndex;
 
-		++padIndex;
+		if(mBallState == EBallState.Jumped)
+		{
+			mBallState = EBallState.BeforeJump;
+		}
 	}
 }

@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PadVisuals : MonoBehaviour
+public class PadEffects : MonoBehaviour
 {
 	public GameObject mBall;
 	public GameObject mParticleObject;
+	public AudioClip mBounceSound;
 	private ParticleSystem[] mParticleSystem;
 
 	// Use this for initialization
@@ -21,6 +22,7 @@ public class PadVisuals : MonoBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
+		/*
 		mParticleObject = Instantiate (mParticleObject, transform.position, transform.rotation) as GameObject;
 		mParticleSystem = mParticleObject.GetComponentsInChildren<ParticleSystem>();
 		foreach (ParticleSystem pSys in mParticleSystem)
@@ -28,5 +30,7 @@ public class PadVisuals : MonoBehaviour
 			pSys.Clear ();
 			pSys.Play ();
 		}
+		*/
+		audio.PlayOneShot(mBounceSound);
 	}
 }
