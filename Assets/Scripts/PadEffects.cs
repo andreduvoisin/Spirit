@@ -22,7 +22,7 @@ public class PadEffects : MonoBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
-		/*
+
 		mParticleObject = Instantiate (mParticleObject, transform.position, transform.rotation) as GameObject;
 		mParticleSystem = mParticleObject.GetComponentsInChildren<ParticleSystem>();
 		foreach (ParticleSystem pSys in mParticleSystem)
@@ -30,7 +30,7 @@ public class PadEffects : MonoBehaviour
 			pSys.Clear ();
 			pSys.Play ();
 		}
-		*/
+
 		audio.PlayOneShot(mBounceSound);
 	}
 }
