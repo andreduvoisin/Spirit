@@ -5,6 +5,8 @@ using UnityEditor;
 public class PadJumpManager : MonoBehaviour
 {
 	public GameObject pads;
+	public float mDistanceToTravel;
+	public float mDistanceRemaining;
 	public List<GameObject> padList = new List<GameObject>();
 	public int padIndex;
 	public int currentPad;
@@ -30,8 +32,14 @@ public class PadJumpManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		float dist = Vector3.Distance(padList[currentPad].transform.position, transform.position);
-		if(dist <= 1.5)
+		//Vector3 direction = rigidbody.velocity;
+		//direction.Normalize();
+		//RaycastHit hitInfo;
+		//Physics.SphereCast(transform.position + (((SphereCollider) collider).radius * 2 + 0.01f) * direction, ((SphereCollider) collider).radius, direction, out hitInfo);
+		//mDistanceRemaining = hitInfo.distance + (((SphereCollider) collider).radius * 2 + 0.01f);
+
+		//float dist = Vector3.Distance(padList[currentPad].transform.position, transform.position);
+		if(/*dist <= 1.5*/mDistanceRemaining <= 1.5f)
 		{
 			canJump = true;
 		}
@@ -59,9 +67,22 @@ public class PadJumpManager : MonoBehaviour
 		}
 	}
 
+	void FixedUpdate()
+	{
+		mDistanceRemaining -= (rigidbody.velocity * Time.deltaTime).magnitude;
+	}
+
 	void OnCollisionEnter(Collision collision)
 	{
 		Jump();
+
+		// This fails if the next pad is placed less than one ball wide
+		Vector3 direction = rigidbody.velocity;
+		direction.Normalize();
+		RaycastHit hitInfo;
+		Physics.SphereCast(transform.position + (((SphereCollider) collider).radius * 2 + 0.01f) * direction, ((SphereCollider) collider).radius, direction, out hitInfo);
+		mDistanceToTravel = hitInfo.distance + (((SphereCollider) collider).radius * 2 + 0.01f);
+		mDistanceRemaining = mDistanceToTravel;
 	}
 
 	void Jump()

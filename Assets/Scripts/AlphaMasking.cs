@@ -17,16 +17,11 @@ public class AlphaMasking : MonoBehaviour
 		transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
 
 		PadJumpManager padJumpMgr = (PadJumpManager) mBall.GetComponent("PadJumpManager");
-		float dist = Vector3.Distance(padJumpMgr.padList[padJumpMgr.currentPad].transform.position, padJumpMgr.transform.position);
-		int prevPadIndex = padJumpMgr.currentPad - 1;
-		if(prevPadIndex < 0) 
-		{
-			prevPadIndex = padJumpMgr.padList.Count - 1;
-		}
+		float distRemaining = padJumpMgr.mDistanceRemaining;
+		float fullDist = padJumpMgr.mDistanceToTravel;
 
-		float fullDist = Vector3.Distance(padJumpMgr.padList[padJumpMgr.currentPad].transform.position, padJumpMgr.padList[prevPadIndex].transform.position);
 
-		float alpha = Mathf.InverseLerp(0.0f, fullDist, dist);
+		float alpha = Mathf.InverseLerp(0.0f, fullDist, distRemaining);
 		if(alpha == 0.0f)
 		{
 			alpha = 0.0001f;
