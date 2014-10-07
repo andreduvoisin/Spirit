@@ -19,8 +19,13 @@ public class PadJumpManager : MonoBehaviour
 	public enum EBallState { BeforeJump, CanJump, MissedJump, Jumped };
 	public EBallState mBallState;
 
+	public GameObject mParticleObject;
+	private ParticleSystem[] mParticleSystem;
+
 	private MainScript mMainScript;
-	
+
+
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -116,7 +121,13 @@ public class PadJumpManager : MonoBehaviour
 		if(sweetspotDistance <= mSweetspotMargin)
 		{
 			mMainScript.AddScore(mMainScript.SWEETSPOT_SCORE);
-			// play sweetspot particles
+			mParticleObject = Instantiate (mParticleObject, transform.position, transform.rotation) as GameObject;
+			mParticleSystem = mParticleObject.GetComponentsInChildren<ParticleSystem>();
+			foreach (ParticleSystem pSys in mParticleSystem)
+			{
+				pSys.Clear ();
+				pSys.Play ();
+			}
 		}
 		else
 		{
