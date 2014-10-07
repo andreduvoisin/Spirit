@@ -62,7 +62,7 @@ public class PadJumpManager : MonoBehaviour
 			}
 			else
 			{
-				KillPlayer();
+				//KillPlayer();
 			}
 			break;
 		case EBallState.Jumped:
