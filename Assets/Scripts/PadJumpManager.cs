@@ -30,7 +30,6 @@ public class PadJumpManager : MonoBehaviour
 		rigidbody.velocity = new Vector3(0, -2, 0);
 		mPadIndex = 0;
 		mMissedInputDist = 0.0f;
-		bMissedInput = false;
 		mBallState = EBallState.BeforeJump;
 		
 		FindDistanceToTravel();
