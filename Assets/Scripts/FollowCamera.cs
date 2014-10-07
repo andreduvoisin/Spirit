@@ -7,6 +7,8 @@ public class FollowCamera : MonoBehaviour {
 	public float mDampConstant = 0.0f;
 	public float mForwardDistFromBall = 5.0f;
 	public float mUpDistFromBall = 5.0f;
+	public AudioClip mBGMusic;
+
 	private Vector3 mIdealCameraPos = new Vector3();
 	private Vector3 mVelocity = new Vector3();
 
@@ -14,6 +16,8 @@ public class FollowCamera : MonoBehaviour {
 	void Start () 
 	{
 		mDampConstant *= Mathf.Sqrt(mSpringConstant);
+		audio.clip = mBGMusic;
+		audio.Play();
 	}
 	
 	// Update is called once per frame
