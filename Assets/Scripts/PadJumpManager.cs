@@ -6,7 +6,9 @@ public class PadJumpManager : MonoBehaviour
 {
 	public GameObject mPads;
 	public float mErrorMargin;
+	public float mSweetspotMargin;
 	public KeyCode mKeyCode;
+	public GameObject mMain;
 	
 	public float mDistanceToTravel;
 	public float mDistanceRemaining;
@@ -16,6 +18,8 @@ public class PadJumpManager : MonoBehaviour
 	
 	public enum EBallState { BeforeJump, CanJump, MissedJump, Jumped };
 	public EBallState mBallState;
+
+	private MainScript mMainScript;
 	
 	// Use this for initialization
 	void Start ()
@@ -31,6 +35,8 @@ public class PadJumpManager : MonoBehaviour
 		mPadIndex = 0;
 		mMissedInputDist = 0.0f;
 		mBallState = EBallState.BeforeJump;
+
+		mMainScript = (MainScript) mMain.GetComponent("MainScript");
 		
 		FindDistanceToTravel();
 	}
@@ -83,13 +89,38 @@ public class PadJumpManager : MonoBehaviour
 				KillPlayer();
 				break;
 			case EBallState.CanJump:
+				CheckSweetspot();
 				mBallState = EBallState.Jumped;
 				break;
 			case EBallState.MissedJump:
+				CheckSweetspot();
 				mBallState = EBallState.BeforeJump;
 				mMissedInputDist = 0.0f;
 				break;
 			}
+		}
+	}
+
+	void CheckSweetspot()
+	{
+		float sweetspotDistance = 0.0f;
+		if(mBallState == EBallState.CanJump)
+		{
+			sweetspotDistance = mDistanceRemaining;
+		}
+		else if(mBallState == EBallState.MissedJump)
+		{
+			sweetspotDistance = mMissedInputDist;
+		}
+
+		if(sweetspotDistance <= mSweetspotMargin)
+		{
+			mMainScript.AddScore(mMainScript.SWEETSPOT_SCORE);
+			// play sweetspot particles
+		}
+		else
+		{
+			mMainScript.AddScore(mMainScript.BOUNCE_SCORE);
 		}
 	}
 	
