@@ -1,2 +1,9 @@
 Library/
 Temp/
+Assembly-CSharp-vs.csproj
+Assembly-CSharp.csproj
+Assembly-UnityScript-firstpass-vs.unityproj
+Assembly-UnityScript-firstpass.unityproj
+Parkour-csharp.sln
+Parkour.sln
+Parkour.userprefs
