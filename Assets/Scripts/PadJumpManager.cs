@@ -23,11 +23,10 @@ public class PadJumpManager : MonoBehaviour
 
 	private MainScript mMainScript;
 
-
-
 	// Use this for initialization
 	void Start ()
 	{
+		// Populate mPadList.
 		foreach(Transform pad in mPads.transform)
 		{
 			if(pad.gameObject.name.Contains("Pad"))
@@ -35,6 +34,7 @@ public class PadJumpManager : MonoBehaviour
 				mPadList.Add(pad.gameObject);
 			}
 		}
+
 		rigidbody.velocity = new Vector3(0, -2, 0);
 		mPadIndex = 0;
 		mMissedInputDist = 0.0f;
@@ -81,7 +81,7 @@ public class PadJumpManager : MonoBehaviour
 			break;
 		}
 	}
-	
+
 	void CheckJumpInput()
 	{
 		if(Input.GetKeyDown(mKeyCode))
