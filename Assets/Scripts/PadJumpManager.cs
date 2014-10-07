@@ -7,7 +7,7 @@ public class PadJumpManager : MonoBehaviour
 	public GameObject mPads;
 	public float mErrorMargin;
 	public KeyCode mKeyCode;
-
+	
 	public float mDistanceToTravel;
 	public float mDistanceRemaining;
 	public float mMissedInputDist;
@@ -16,10 +16,10 @@ public class PadJumpManager : MonoBehaviour
 	public int mPadIndex;
 	public bool bCanJump;
 	public bool bMissedInput;
-
+	
 	public enum EBallState { BeforeJump, CanJump, Jumped };
 	public EBallState mBallState;
-
+	
 	// Use this for initialization
 	void Start ()
 	{
@@ -37,7 +37,7 @@ public class PadJumpManager : MonoBehaviour
 		bCanJump = false;
 		bMissedInput = false;
 		mBallState = EBallState.BeforeJump;
-
+		
 		FindDistanceToTravel();
 	}
 	
@@ -69,7 +69,7 @@ public class PadJumpManager : MonoBehaviour
 			break;
 		}
 	}
-
+	
 	void CheckJumpInput()
 	{
 		if(Input.GetKeyDown(mKeyCode))
@@ -92,12 +92,12 @@ public class PadJumpManager : MonoBehaviour
 			}
 		}
 	}
-
+	
 	void KillPlayer()
 	{
- 		rigidbody.position = new Vector3(-100, -500, -1000);
+		rigidbody.position = new Vector3(-100, -500, -1000);
 	}
-
+	
 	void FixedUpdate()
 	{
 		mDistanceRemaining -= (rigidbody.velocity * Time.deltaTime).magnitude;
@@ -106,21 +106,21 @@ public class PadJumpManager : MonoBehaviour
 			mMissedInputDist += (rigidbody.velocity * Time.deltaTime).magnitude;
 		}
 	}
-
+	
 	void OnCollisionEnter(Collision collision)
 	{
 		Jump();
 		FindDistanceToTravel();
 		CheckMissedInput();
 	}
-
+	
 	void Jump()
 	{
 		mPadIndex = (mPadIndex + 1) % mPadList.Count;
 		Vector3 dir = mPadList[mPadIndex].transform.position - transform.position;
 		rigidbody.velocity = Vector3.Normalize(dir) * 10;
 	}
-
+	
 	void FindDistanceToTravel()
 	{
 		// This fails if the next pad is placed less than one ball wide
@@ -131,7 +131,7 @@ public class PadJumpManager : MonoBehaviour
 		mDistanceToTravel = hitInfo.distance + (((SphereCollider) collider).radius * 2 + 0.01f);
 		mDistanceRemaining = mDistanceToTravel;
 	}
-
+	
 	void CheckMissedInput()
 	{
 		if(mBallState == EBallState.Jumped)
