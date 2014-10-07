@@ -12,7 +12,6 @@ public class PadJumpManager : MonoBehaviour
 	public float mDistanceRemaining;
 	public float mMissedInputDist;
 	public List<GameObject> mPadList = new List<GameObject>();
-	public int mCurrentInputPad;
 	public int mPadIndex;
 	public bool bCanJump;
 	public bool bMissedInput;
@@ -32,7 +31,6 @@ public class PadJumpManager : MonoBehaviour
 		}
 		rigidbody.velocity = new Vector3(0, -2, 0);
 		mPadIndex = 0;
-		mCurrentInputPad = 0;
 		mMissedInputDist = 0.0f;
 		bCanJump = false;
 		bMissedInput = false;
@@ -44,7 +42,6 @@ public class PadJumpManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		//float dist = Vector3.Distance(mPadList[mCurrentInputPad].transform.position, transform.position);
 		float distanceToCurrentPad = bMissedInput ? mMissedInputDist : mDistanceRemaining;
 		switch(mBallState)
 		{
@@ -59,7 +56,7 @@ public class PadJumpManager : MonoBehaviour
 			if(distanceToCurrentPad <= mErrorMargin)
 			{
 				CheckJumpInput();
-			}
+			} 
 			else
 			{
 				KillPlayer();
@@ -82,7 +79,6 @@ public class PadJumpManager : MonoBehaviour
 				break;
 			case EBallState.CanJump:
 				mBallState = EBallState.Jumped;
-				mCurrentInputPad = (mCurrentInputPad + 1) % mPadList.Count;
 				if(bMissedInput)
 				{
 					mMissedInputDist = 0.0f;
@@ -134,14 +130,11 @@ public class PadJumpManager : MonoBehaviour
 
 	void CheckMissedInput()
 	{
-		if(mBallState == EBallState.Jumped)
+		mMissedInputDist = 0.0f;
+		bMissedInput = !(mBallState == EBallState.Jumped);
+		if(!bMissedInput)
 		{
 			mBallState = EBallState.BeforeJump;
-			bMissedInput = false;
-		}
-		else
-		{
-			bMissedInput = mCurrentInputPad != mPadIndex;
 		}
 	}
 }
