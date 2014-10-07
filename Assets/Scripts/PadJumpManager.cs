@@ -59,7 +59,7 @@ public class PadJumpManager : MonoBehaviour
 			} 
 			else
 			{
-				//KillPlayer();
+				KillPlayer();
 			}
 			break;
 		case EBallState.Jumped:
@@ -91,7 +91,7 @@ public class PadJumpManager : MonoBehaviour
 	
 	void KillPlayer()
 	{
-		gameObject.SetActive(false);
+		//gameObject.SetActive(false);
 	}
 	
 	void FixedUpdate()
@@ -105,7 +105,7 @@ public class PadJumpManager : MonoBehaviour
 	
 	void OnCollisionEnter(Collision collision)
 	{
-		Jump();
+  		Jump();
 		FindDistanceToTravel();
 		CheckMissedInput();
 	}
