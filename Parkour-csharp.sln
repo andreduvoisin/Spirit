@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{4E8C3E28-82C6-A8C8-E5C1-9CF128DD38CD}") = "parkour", "Assembly-CSharp-vs.csproj", "{E60C632C-B29C-E38C-F454-25F7AB4AC9E2}"
+Project("{51F8571B-1EC5-D507-6708-02B3A5F06B65}") = "Parkour", "Assembly-CSharp-vs.csproj", "{8FC88C1C-2DD0-EEDF-5469-9A4AFFA6E67F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E60C632C-B29C-E38C-F454-25F7AB4AC9E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E60C632C-B29C-E38C-F454-25F7AB4AC9E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E60C632C-B29C-E38C-F454-25F7AB4AC9E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E60C632C-B29C-E38C-F454-25F7AB4AC9E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC88C1C-2DD0-EEDF-5469-9A4AFFA6E67F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC88C1C-2DD0-EEDF-5469-9A4AFFA6E67F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC88C1C-2DD0-EEDF-5469-9A4AFFA6E67F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC88C1C-2DD0-EEDF-5469-9A4AFFA6E67F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																		GlobalSection(MonoDevelopProperties) = preSolution
+					GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
