@@ -6,12 +6,13 @@ public class PadJumpManager : MonoBehaviour
 {
 	public GameObject pads;
 	public float mDistanceToTravel;
-	public float mDistanceRemaining;
+	public float mDistanceRemaining = 2.5f;
 	public List<GameObject> padList = new List<GameObject>();
 	public int padIndex;
 	public int currentPad;
 	public bool shouldJump;
 	public bool canJump;
+	public float errorMargin = 6.0f;
 
 	// Use this for initialization
 	void Start ()
@@ -32,14 +33,7 @@ public class PadJumpManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		//Vector3 direction = rigidbody.velocity;
-		//direction.Normalize();
-		//RaycastHit hitInfo;
-		//Physics.SphereCast(transform.position + (((SphereCollider) collider).radius * 2 + 0.01f) * direction, ((SphereCollider) collider).radius, direction, out hitInfo);
-		//mDistanceRemaining = hitInfo.distance + (((SphereCollider) collider).radius * 2 + 0.01f);
-
-		//float dist = Vector3.Distance(padList[currentPad].transform.position, transform.position);
-		if(/*dist <= 1.5*/mDistanceRemaining <= 1.5f)
+		if(mDistanceRemaining <= errorMargin)
 		{
 			canJump = true;
 		}
@@ -47,7 +41,7 @@ public class PadJumpManager : MonoBehaviour
 		{
 			if(canJump)
 			{
-				//rigidbody.position = new Vector3(-100, -500, -1000);
+				rigidbody.position = new Vector3(-100, -500, -1000);
 			}
 			canJump = false;
 		}
